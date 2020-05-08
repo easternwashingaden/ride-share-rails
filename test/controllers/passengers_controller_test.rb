@@ -1,21 +1,21 @@
 require "test_helper"
 
 describe PassengersController do
-  describe "index" do
-    before do
-      @passenger = Passenger.create(
-        name: "Lak Mok",
-        phone_num: "(555) 555-5555"
-      )
-    end
+  let (:passenger) {
+    Passenger.create(
+      name: "Lak Mok",
+      phone_num: "(555) 555-5555"
+    )
+  }
 
+  describe "index" do
     it "responds with success when there are many passengers saved" do
       get passengers_path
       must_respond_with :success
     end
 
     it "responds with success when there are no passengers saved" do
-      @passenger.destroy
+      passenger.destroy
 
       get passengers_path
       must_respond_with :success
@@ -23,7 +23,15 @@ describe PassengersController do
   end
 
   describe "show" do
-    # Your tests go here
+    it "responds with success when showing an existing valid passenger" do
+      get passenger_path(passenger.id)
+      must_respond_with :success
+    end
+
+    it "responds with redirect with an invalid passenger id" do
+      get passenger_path("taco")
+      must_redirect_to passengers_path
+    end
   end
 
   describe "new" do
