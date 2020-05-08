@@ -47,7 +47,7 @@ describe PassengersController do
       passenger_hash = {
         passenger: {
           name: "Lee H",
-          phone_num: "(555) 555-5556"
+          phone_num: "(666) 666-6666"
         },
       }
 
@@ -64,9 +64,9 @@ describe PassengersController do
       must_redirect_to passenger_path(new_passenger.id)
     end
 
-    it "does not create a passenger if the form data violates passenger validations, and responds with a 400 status" do
+    it "does not create a passenger if the form data violates passenger validations, and responds with a 400 error" do
       # Arrange
-      passenger_hash = {
+      invalid_passenger_hash = {
         passenger: {
           name: "Lee H",
           phone_num: nil
@@ -75,7 +75,7 @@ describe PassengersController do
 
       # Act-Assert
       expect {
-        post passengers_path, params: passenger_hash
+        post passengers_path, params: invalid_passenger_hash
       }.wont_differ "Passenger.count"
 
       # Assert
@@ -84,19 +84,67 @@ describe PassengersController do
   end
 
   describe "edit" do
-    it "responds with success when getting the edit page for an existing, valid driver" do
+    it "responds with success when getting the edit page for an existing, valid passenger" do
       get edit_passenger_path(passenger.id)
       must_respond_with :success
     end
 
-    it "responds with redirect when getting the edit page for a non-existing driver" do
+    it "responds with redirect when getting the edit page for a non-existing passenger" do
       get edit_passenger_path("taco")
       must_redirect_to passengers_path
     end
   end
 
   describe "update" do
-    # Your tests go here
+    let (:edited_passenger_hash) {
+      {
+        passenger: {
+          name: "Lee H",
+          phone_num: "(666) 666-6666"
+        },
+      }
+    }
+
+    it "can update an existing passenger with valid information accurately, and redirect" do
+      id = passenger.id
+
+      expect {
+        patch passenger_path(id), params: edited_passenger_hash
+      }.wont_differ "Passenger.count"
+
+      passenger.reload
+      expect(passenger.name).must_equal edited_passenger_hash[:passenger][:name]
+      expect(passenger.phone_num).must_equal edited_passenger_hash[:passenger][:phone_num]
+
+      must_redirect_to passenger_path(id)
+    end
+
+    it "does not update any passenger if given an invalid id, and responds with a 404" do
+      id = "taco"
+
+      expect {
+        patch passenger_path(id), params: edited_passenger_hash
+      }.wont_differ "Passenger.count"
+
+      must_respond_with :not_found
+    end
+
+    it "does not create a passenger if the form data violates passenger validations, and responds with a 400 error" do
+      id = passenger.id
+
+      invalid_passenger_hash = {
+        passenger: {
+          name: "Lee H",
+          phone_num: nil
+        },
+      }
+
+      expect {
+        patch passenger_path(id), params: invalid_passenger_hash
+      }.wont_differ "Passenger.count"
+
+      must_respond_with :bad_request
+    end
   end
 
   describe "destroy" do
