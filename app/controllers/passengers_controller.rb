@@ -10,6 +10,7 @@ class PassengersController < ApplicationController
   end
 
   def new
+    @passenger = Passenger.new
   end
 
   def create
