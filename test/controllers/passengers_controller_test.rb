@@ -64,7 +64,7 @@ describe PassengersController do
       must_redirect_to passenger_path(new_passenger.id)
     end
 
-    it "does not create a passenger if the form data violates passenger validations, and responds with a 204 status" do
+    it "does not create a passenger if the form data violates passenger validations, and responds with a 400 status" do
       # Arrange
       passenger_hash = {
         passenger: {
@@ -79,7 +79,7 @@ describe PassengersController do
       }.wont_differ "Passenger.count"
 
       # Assert
-      must_respond_with :no_content
+      must_respond_with :bad_request
     end
   end
 
