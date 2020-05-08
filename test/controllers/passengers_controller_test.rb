@@ -84,7 +84,15 @@ describe PassengersController do
   end
 
   describe "edit" do
-    # Your tests go here
+    it "responds with success when getting the edit page for an existing, valid driver" do
+      get edit_passenger_path(passenger.id)
+      must_respond_with :success
+    end
+
+    it "responds with redirect when getting the edit page for a non-existing driver" do
+      get edit_passenger_path("taco")
+      must_redirect_to passengers_path
+    end
   end
 
   describe "update" do
