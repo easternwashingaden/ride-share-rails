@@ -159,7 +159,7 @@ describe DriversController do
       must_redirect_to drivers_path
     end
 
-    it "does not change the db when the driver does not exist, then responds with " do
+    it "does not change the db when the driver does not exist, then responds with a 400 error" do
       id = -1
 
       expect{
@@ -171,7 +171,17 @@ describe DriversController do
   end
 
   describe "toggle_available" do
+    it "can change an available driver to unavailable" do
 
+    end
+
+    it "can change an unavailable driver to available" do
+
+    end
+
+    it "does not change driver status when the driver does not exist, then responds with a 400 error" do
+
+    end
   end
 end
 
