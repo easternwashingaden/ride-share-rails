@@ -1,0 +1,12 @@
+
+<%= form_with model: @driver, class: 'driver-form' do |f| %>
+ <p>Please provide the following information:</p>
+
+  <%= f.label :name %>
+  <%= f.text_field :name %>
+
+  <%= f.label :vin %>
+  <%= f.text_field :vin %>
+
+  <%= f.submit "#{action_name} driver", class: "driver-form-button" %>
+<% end %>
