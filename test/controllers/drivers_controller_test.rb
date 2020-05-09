@@ -31,7 +31,7 @@ describe DriversController do
 
     it "responds with 404 with an invalid driver id" do
       get driver_path(-1)
-      must_respond_with :not_found # Here, we can either redirect or show a sucess message
+      must_respond_with :not_found # Here, we can either redirect or show a success message
     end
   end
 
@@ -44,11 +44,12 @@ describe DriversController do
 
   describe "create" do
     it "can create a new driver with valid information accurately, and redirect" do
-      # Arrange: the strong params do not permit "available," so "name" and "vin" are the only two params that will be passed in
+      # Arrange 
+      # "name" and "vin" are the only two params that will be passed in to the action
       driver_hash = {
         driver: {
           name: "new driver",
-          vin: "BAJDKSH124",
+          vin: "BAJDKSH124"
         },
       } 
 
@@ -96,6 +97,7 @@ describe DriversController do
   end
 
   describe "update" do
+    # "name" and "vin" are the only two params that will be passed in to the action
     let (:edited_driver_hash) {
       {
         driver: {
@@ -115,7 +117,7 @@ describe DriversController do
       driver.reload
       expect(driver.name).must_equal edited_driver_hash[:driver][:name]
       expect(driver.vin).must_equal edited_driver_hash[:driver][:vin]
-      expect(driver.available).must_equal true # we cannot change availability using route params
+      expect(driver.available).must_equal true # we cannot change availability using the edit form
 
       must_redirect_to driver_path(id)
     end
@@ -166,6 +168,10 @@ describe DriversController do
 
       must_respond_with :not_found
     end
+  end
+
+  describe "toggle_available" do
+
   end
 end
 
