@@ -31,7 +31,7 @@ describe DriversController do
 
     it "responds with 404 with an invalid driver id" do
       get driver_path(-1)
-      must_respond_with :not_found # Here, we can either redirect or show a success message
+      must_redirect_to drivers_path
     end
   end
 
