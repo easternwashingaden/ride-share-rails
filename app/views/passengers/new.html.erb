@@ -1,2 +1,5 @@
-<h1>Passenger#new</h1>
-<p>Find me in app/views/passenger/new.html.erb</p>
+<h3>Add Passenger</h3>
+
+<p>Please enter the following information to add a passenger to our database:</p>
+
+<%= render partial: "passenger_form", locals: { action_name: "Create" } %>

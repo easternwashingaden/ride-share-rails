@@ -1,0 +1,10 @@
+<%= form_with model: @passenger, class: 'passenger-form' do |f| %>
+
+  <%= f.label :name %>
+  <%= f.text_field :name, :placeholder => "name" %>
+
+  <%= f.label :phone_num %>
+  <%= f.text_field :phone_num, :placeholder => "phone number" %>
+
+  <%= f.submit "#{action_name} Passenger", class: "passenger-form-button" %>
+<% end %>
