@@ -148,6 +148,24 @@ describe PassengersController do
   end
 
   describe "destroy" do
-    # Your tests go here
+    it "destroys the passenger instance in db when passenger exists, then redirects" do
+      id = passenger.id
+      
+      expect{
+        delete passenger_path(id)
+      }.must_differ "Passenger.count", 1
+
+      must_redirect_to passengers_path
+    end
+
+    it "does not change the db when the passenger does not exist, then responds with a 404 error" do
+      id = "taco"
+
+      expect{
+        delete passenger_path(id)
+      }.wont_differ "Passenger.count"
+
+      must_respond_with :not_found
+    end
   end
 end
