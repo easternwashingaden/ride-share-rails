@@ -1,6 +1,6 @@
 <h3>Driver Name: <%= @driver.name %></h3>
 <p><strong>Driver Vin:</strong> <%= @driver.vin.upcase %> </p>
-<p><strong>Driver Availability:</strong> <%= @driver.available %> </p>
+<p><strong>Driver Availability:</strong> <%= @driver.available ? "Available" : "Unavailable" %> </p>
 
 <%= @driver.available ? button_to("Make Unavailable", driver_available_path(@driver), method: :patch) : button_to("Make Availble", driver_available_path(@driver), method: :patch)%> 
 <%= button_to "Edit Driver", edit_driver_path(@driver.id), method: :get%>
