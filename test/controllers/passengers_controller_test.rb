@@ -153,7 +153,7 @@ describe PassengersController do
       
       expect{
         delete passenger_path(id)
-      }.must_differ "Passenger.count", 1
+      }.must_differ "Passenger.count", -1
 
       must_redirect_to passengers_path
     end
