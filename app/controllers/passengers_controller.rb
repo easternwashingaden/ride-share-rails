@@ -16,13 +16,8 @@ class PassengersController < ApplicationController
   def create
     @passenger = Passenger.new(passenger_params)
 
-    if @passenger.valid?
-      @passenger.save ? (redirect_to passenger_path(@passenger)) : (render :new)
-      return
-    else 
-      head :bad_request
-      return 
-    end
+    @passenger.save ? (redirect_to passenger_path(@passenger)) : (render :new, status: :bad_request)
+    return
   end
 
   def edit
