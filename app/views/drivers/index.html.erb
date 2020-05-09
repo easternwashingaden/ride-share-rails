@@ -5,10 +5,12 @@
   <% @drivers.each do |driver| %>
     <li>
       <%= link_to driver.name, driver_path(driver.id)%>
-      <%= link_to "-----EDIT |", edit_driver_path(driver.id) %>
-      <%= link_to "DELETE", driver_path(driver.id), method: :delete, data: {confirm: "Are you sure you want to delete this driver #{driver.name}?"}%>
+      <%= driver.vin.upcase %>
+      <%= driver.available %>
+      <%= driver.available ? link_to("--Make Unavailable |", driver_available_path(driver), method: :patch) : link_to("--Make Availble |", driver_available_path(driver), method: :patch)%> 
+      <%= link_to "--EDIT |", edit_driver_path(driver.id) %>
+      <%= link_to "--DELETE", driver_path(driver.id), method: :delete, data: {confirm: "Are you sure you want to delete this driver #{driver.name}?"}%>
     </li>
-
   <% end %>
   </ol>
 <% else %>
