@@ -18,6 +18,7 @@ class DriversController < ApplicationController
 
   def create
     @driver = Driver.new(driver_params)
+    @driver.available = true
     if @driver.save
       # flash[:success] = "Driver added successfully"
       redirect_to driver_path(@driver)
@@ -65,10 +66,27 @@ class DriversController < ApplicationController
     end
   end 
 
+  def make_available
+    @driver = Driver.find_by(id: params[:id])
+    if @driver.nil?
+      head :not_found
+      return
+    end
+    # Update the driver's availability
+    if @driver.available == false
+      @driver.update(available: true)
+      redirect_to driver_path
+      return
+    else 
+      @driver.update(available: false)
+      redirect_to driver_path
+      return
+    end   
+  end
 
   private
   def driver_params
-    return params.require(:driver).permit(:name, :vin)
+    return params.require(:driver).permit(:name, :vin, :available)
   end
 
 end
