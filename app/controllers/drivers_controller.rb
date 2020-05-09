@@ -1,11 +1,11 @@
 class DriversController < ApplicationController
   def index
-    @drivers = Driver.all.order("id")
+    @drivers = Driver.order("id")
   end
 
   def show
-    driver_id = params[:id]
-    @driver = Driver.find_by(id: driver_id)
+    @driver = Driver.find_by(id: params[:id])
+
     if @driver.nil?
       head :not_found
       return
@@ -18,6 +18,8 @@ class DriversController < ApplicationController
 
   def create
     @driver = Driver.new(driver_params)
+    @driver[:available] = true # new drivers are available by default
+    
     if @driver.save
       # flash[:success] = "Driver added successfully"
       redirect_to driver_path(@driver)
@@ -31,6 +33,7 @@ class DriversController < ApplicationController
 
   def edit
     @driver = Driver.find_by(id: params[:id])
+    
     if @driver.nil?
       redirect_to drivers_path
       return
@@ -65,10 +68,9 @@ class DriversController < ApplicationController
     end
   end 
 
-
   private
+
   def driver_params
     return params.require(:driver).permit(:name, :vin)
   end
-
 end
