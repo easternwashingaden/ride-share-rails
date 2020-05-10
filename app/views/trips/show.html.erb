@@ -1,2 +1,6 @@
-<h1>Trips#show</h1>
-<p>Find me in app/views/trips/show.html.erb</p>
+<p><strong>Trip ID: </strong><%=@trip.id%></p>
+<p><strong>Trip Date: </strong><%=@trip.date.to_date%></p>
+<p><strong>Trip Cost: </strong><%=@trip.cost%></p>
+<p><strong>Trip Rating: </strong><%=@trip.rating%></p>
+<p><strong>Passenger Name: </strong><%= link_to @trip.passenger, passenger_path%></p>
+<p><strong>Driver Name: </strong><%= link_to @trip.driver, driver_path%></p>
