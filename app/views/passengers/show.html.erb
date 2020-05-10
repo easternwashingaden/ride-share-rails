@@ -5,8 +5,8 @@
 <%= button_to "Delete Passenger", passenger_path(@passenger.id), method: :delete, data: {confirm: "Are you sure you want to delete this passenger: #{@passenger.name}?"} %>
 <%= button_to "Create a New Trip", passenger_trips_path(@passenger.id), method: :post %>
 
-<% if @trips.length > 0 %>
   <% @trips = Trip.where(passenger_id: @passenger.id)%>
+  <% if @trips.length > 0 %>
     <table style="width:70%">  
       <h3><%= "#{@passenger.name}\'s Trips"%></h3> 
       <tr>
