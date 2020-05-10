@@ -8,8 +8,5 @@ Rails.application.routes.draw do
   patch '/drivers/:id/toggle_available', to: 'drivers#toggle_available', as: 'driver_available'
   
   post "passengers/:id/trips", to: "trips#create", as: "trips"
-  get "trips/:id/edit", to: "trips#edit", as: "edit_trip"
-  get "trips/:id", to: "trips#show", as: "trip"
-  patch "trips/:id", to: "trips#update" 
-  delete "trips/:id", to: "trips#destroy"
+  resources :trips, except: [:index, :new, :create]
 end
