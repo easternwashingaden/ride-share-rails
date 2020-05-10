@@ -92,14 +92,62 @@ describe TripsController do
   end
 
   describe "edit" do
-    # Your tests go here
+    it "responds with success when getting the edit page for an existing, valid " do
+      get edit_trip_path(trip.id)
+      must_respond_with :success
+    end
+
+    it "responds with redirect when getting the edit page for a non-existing trip" do
+      get edit_trip_path(-1)
+      must_redirect_to edit_trip_path
+    end
   end
 
   describe "update" do
-    # Your tests go here
+    let (:edited_trip_hash) {
+      {
+        trip: {
+          date: Date.today,
+          rating: 5, 
+          cost: 768
+        },
+      }
+    }
+
+    it "can update an existing trip with valid information accurately, and redirect" do
+      id = trip.id
+      expect {
+        patch trip_path(id), params: edited_trip_hash
+      }.wont_differ "Trip.where(passenger_id: passenger.id).count"
+
+      passenger.reload
+      expect(trip.date).must_equal edited_trip_hash[:trip][:date]
+      expect(trip.cost).must_equal edited_trip_hash[:trip][:cost]
+      expect(trip.rating).must_equal edited_trip_hash[:trip][:cost]
+
+      must_redirect_to passenger_path(trip.passenger.id)
+    end
   end
 
   describe "destroy" do
-    # Your tests go here
+    it "destroys the trip instance in db when trip exists, then redirects" do
+      id = trip.id
+      
+      expect{
+        delete trip_path(id)
+      }.must_differ "Trip.where(passenger_id: passenger.id).count", -1
+
+      must_redirect_to passenger_path(trip.passenger.id)
+    end
+
+    it "does not change the db when the trip does not exist, then responds with a 404 error" do
+      id = -1
+
+      expect{
+        delete trip_path(id)
+      }.wont_differ "Trip.where(passenger_id: passenger.id).count"
+
+      must_respond_with :not_found
+    end
   end
 end
