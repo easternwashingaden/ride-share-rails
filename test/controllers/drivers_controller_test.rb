@@ -172,15 +172,28 @@ describe DriversController do
 
   describe "toggle_available" do
     it "can change an available driver to unavailable" do
-
+      driver1 = Driver.first
+      patch driver_available_path(driver.id)
+      expect(Driver.first.available).must_equal false
+      
+      must_redirect_to driver_path
     end
 
     it "can change an unavailable driver to available" do
+      driver1 = Driver.first
+      patch driver_available_path(driver.id)
+      patch driver_available_path(driver.id)
+      expect(Driver.first.available).must_equal true
 
+      must_redirect_to driver_path
     end
 
     it "does not change driver status when the driver does not exist, then responds with a 400 error" do
-
+      expect {
+        patch driver_available_path(-1)
+      }.wont_change "Driver.count"
+      
+      must_respond_with :not_found
     end
   end
 end
