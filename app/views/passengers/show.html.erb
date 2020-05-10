@@ -7,7 +7,8 @@
 
 
 <% @trips = Trip.where(passenger_id: @passenger.id)%>
-  <table style="width:70%">    
+  <table style="width:70%">  
+  <h2><%= "#{@passenger.name}\'s Trips"%></h2> 
     <tr>
         <th>Trip ID</th>
         <th>Trip Date</th>
