@@ -4,8 +4,7 @@ describe TripsController do
   let (:driver) {
     Driver.create(
       name: "Lee H", 
-      vin: "FJSKDJ12",
-      available: false
+      vin: "FJSKDJ12"
     )
   }
   
@@ -20,7 +19,7 @@ describe TripsController do
     Trip.create(
       driver_id: driver.id,
       passenger_id: passenger.id, 
-      date: Date.today, 
+      date: Date.today + 1, 
       cost: rand(1..5000),
       rating: nil,
     )
@@ -39,54 +38,44 @@ describe TripsController do
   end
 
   describe "create" do
-    let (:new_driver) {
-      Driver.create(
-        name: "new driver", 
-        vin: "FJSKDJ12",
-        available: true
-      )
-    }
-
-    it "can create a new trip with valid information accurately, and redirect" do
+    it "can create a new trip with valid information accurately and redirect" do
       # Arrange
-      trip_hash = {
-        trip: {
-          driver_id: new_driver.id,
-          passenger_id: passenger.id,
-          date: Time.new,
-          rating: nil, 
-          cost: 240
-        },
-      }
+      driver.update(available: true) # make sure there is at least one available driver, otherwise test will have an error
 
       # Act-Assert
       expect {
-        post trips_path, params: trip_hash
+        post passenger_trips_path(passenger.id)
       }.must_differ "Trip.count", 1
 
       # Assert
-      new_trip = Trip.find_by(name: trip_hash[:trip][:driver_id])
-      expect(new_trip.name).must_equal passenger_hash[:passenger][:name]
-      expect(new_passenger.phone_num).must_equal passenger_hash[:passenger][:phone_num]
+      new_trip = Trip.find_by(date: Date.today)
+      expect(new_trip.passenger_id).must_equal passenger.id
+      expect(new_trip.driver_id).must_equal driver.id
+      expect(new_trip.date).must_equal Date.today
+      expect(new_trip.cost).must_be_kind_of Integer
+      expect(new_trip.rating).must_be_nil
       
-      must_redirect_to passenger_path(new_passenger.id)
+      must_redirect_to passenger_path(passenger.id)
     end
 
-    it "does not create a passenger if the form data violates passenger validations, and responds with a 400 error" do
-      # Arrange
-      invalid_passenger_hash = {
-        passenger: {
-          name: "Lee H",
-          phone_num: nil
-        },
-      }
+    it "sets driver status to unavailable upon successfully creating a new trip" do
+      driver.update(available: true)
 
-      # Act-Assert
       expect {
-        post passengers_path, params: invalid_passenger_hash
-      }.wont_differ "Passenger.count"
+        post passenger_trips_path(passenger.id)
+      }.must_differ "Trip.count", 1
 
-      # Assert
+      driver.reload
+      expect(driver.available).must_equal false
+    end
+
+    it "does not create a trip if an invalid passenger id is given, and responds with a 400 error" do
+      driver.update(available: true)
+
+      expect {
+        post passenger_trips_path(-1)
+      }.wont_differ "Trip.count"
+
       must_respond_with :bad_request
     end
   end
