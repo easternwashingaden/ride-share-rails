@@ -7,3 +7,7 @@
   <li><strong>Passenger Name:</strong> <%= link_to @trip.passenger.name, passenger_path(@trip.passenger.id) %></li>
   <li><strong>Driver Name:</strong> <%= link_to @trip.driver.name, driver_path(@trip.driver.id) %></li>
 </ul>
+
+<%= button_to "Edit Trip", edit_trip_path(@trip.id), method: :get %>
+
+<%= button_to "Delete Trip", trip_path(@trip.id), method: :delete, data: {confirm: "Are you sure you want to delete Trip ##{@trip.id}?"} %>
