@@ -1,11 +1,38 @@
 <h3>Trip #<%= @trip.id %></h3>
 
 <ul>
-  <li><strong>Date:</strong> <%= @trip.date.strftime("%m/%d/%Y") %></li>
-  <li><strong>Cost:</strong> $<%= @trip.cost %></li>
-  <li><strong>Rating:</strong> <%= @trip.rating %></li>
-  <li><strong>Passenger Name:</strong> <%= link_to @trip.passenger.name, passenger_path(@trip.passenger.id) %></li>
-  <li><strong>Driver Name:</strong> <%= link_to @trip.driver.name, driver_path(@trip.driver.id) %></li>
+  <li>
+    <strong>Date:</strong> 
+    <%= @trip.date.strftime("%m/%d/%Y") %>
+  </li>
+  <li>
+    <strong>Cost:</strong> 
+    $<%= @trip.cost %>
+  </li>
+  <li>
+    <% if @trip.rating.nil? %>
+    
+      <%= form_with model: @trip, class: "rate-trip-form" do |f| %>
+
+        <%= f.label "Rating:" %>
+        <%= f.select(:rating, [1, 2, 3, 4, 5]) %>
+
+        <%= f.submit "Rate Trip", class: "rate-trip-form-button" %>
+      <% end %>
+      
+    <% else %>
+      <strong>Rating:</strong> 
+      <%= @trip.rating %>
+    <% end %>
+  </li>
+  <li>
+    <strong>Passenger Name:</strong> 
+    <%= link_to @trip.passenger.name, passenger_path(@trip.passenger.id) %>
+  </li>
+  <li>
+    <strong>Driver Name:</strong> 
+    <%= link_to @trip.driver.name, driver_path(@trip.driver.id) %>
+  </li>
 </ul>
 
 <%= button_to "Edit Trip", edit_trip_path(@trip.id), method: :get %>
