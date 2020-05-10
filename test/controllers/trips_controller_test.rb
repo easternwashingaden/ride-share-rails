@@ -81,7 +81,15 @@ describe TripsController do
   end
 
   describe "edit" do
-    # Your tests go here
+    it "responds with success when getting the edit page for an existing, valid trip" do
+      get edit_trip_path(trip.id)
+      must_respond_with :success
+    end
+
+    it "responds with a 400 error when getting the edit page for a non-existing trip" do
+      get edit_trip_path(-1)
+      must_respond_with :not_found
+    end
   end
 
   describe "update" do

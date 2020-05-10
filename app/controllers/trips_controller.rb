@@ -22,13 +22,16 @@ class TripsController < ApplicationController
       redirect_to passenger_path(params[:passenger_id])
       return
     else
-      # flash.now[:error] = "Something went wrong. Trip not added"
+      # flash.now[:error] = "Something went wrong: Trip not added"
       redirect_to passenger_path(params[:passenger_id]), status: :bad_request
       return
     end
   end
 
   def edit
+    @trip = Trip.find_by(id: params[:id])
+    head :not_found if @trip.nil?
+    return
   end
 
   def update
