@@ -1,2 +1,23 @@
-<h1>Trips#edit</h1>
-<p>Find me in app/views/trips/edit.html.erb</p>
+<h3>Edit Trip</h3>
+
+<p>Please make any necessary changes to this trip in our database:</p>
+
+<%= form_with model: @trip, class: "trip-form" do |f| %>
+
+  <%= f.label :date %>
+  <%= f.date_select(:date) %>
+
+  <div class="line-break"></div>
+
+  <%= f.label :cost %>
+  <%= f.text_field :cost, placeholder: "cost" %>
+
+  <div class="line-break"></div>
+
+  <%= f.label :rating %>
+  <%= f.select(:rating, [1, 2, 3, 4, 5]) %>
+
+  <div class="line-break"></div>
+
+  <%= f.submit "Update Trip", class: "trip-form-button" %>
+<% end %>

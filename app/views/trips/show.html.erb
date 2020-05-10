@@ -1,2 +1,9 @@
-<h1>Trips#show</h1>
-<p>Find me in app/views/trips/show.html.erb</p>
+<h3>Trip #<%= @trip.id %></h3>
+
+<ul>
+  <li><strong>Date:</strong> <%= @trip.date.strftime("%m/%d/%Y") %></li>
+  <li><strong>Cost:</strong> $<%= @trip.cost %></li>
+  <li><strong>Rating:</strong> <%= @trip.rating %></li>
+  <li><strong>Passenger Name:</strong> <%= link_to @trip.passenger.name, passenger_path(@trip.passenger.id) %></li>
+  <li><strong>Driver Name:</strong> <%= link_to @trip.driver.name, driver_path(@trip.driver.id) %></li>
+</ul>
