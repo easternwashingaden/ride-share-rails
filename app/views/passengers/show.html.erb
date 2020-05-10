@@ -5,8 +5,8 @@
 <%= button_to "Delete Passenger", passenger_path(@passenger.id), method: :delete, data: {confirm: "Are you sure you want to delete this passenger: #{@passenger.name}?"} %>
 <%= button_to "Create a New Trip", trips_path, method: :post %>
 
-
 <% @trips = Trip.where(passenger_id: @passenger.id)%>
+<% if @trips.length > 0 %>
   <table style="width:70%">  
   <h2><%= "#{@passenger.name}\'s Trips"%></h2> 
     <tr>
@@ -19,15 +19,17 @@
     </tr>    
     <% @trips.each do |trip| %>
       <tr>
-        <td><%= link_to trip.id, trip_path(@passenger.id) %></td>
-        <td><%= trip.date%></td>
+        <td><%= link_to trip.id, trip_path(trip.id) %></td>
+        <td><%= trip.date.to_date%></td>
         <td><%= link_to trip.passenger.name, passenger_path(@passenger.id) %></td> 
         <td><%= link_to trip.driver.name, driver_path(trip.driver.id)%></td> 
         <td><%= trip.rating %></td>
-        <td><%= trip.cost %></td>
-        
+        <td><%= trip.cost.to_f %></td>
       </tr>
     <% end %>
   </table>
+<% else %>
+  <h2><%= "#{@passenger.name} does not have any trips." %></h2>
+<% end %>
 
   
