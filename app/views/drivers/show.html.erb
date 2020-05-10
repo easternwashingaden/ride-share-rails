@@ -11,8 +11,8 @@
   <table style="width:70%">  
   <h2><%= "#{@driver.name}\'s Trips"%></h2> 
     <tr>
-        <th>Trip ID</th>
-        <th>Trip Date</th>
+        <th>ID</th>
+        <th>Date</th>
         <th>Passenger Name</th>
         <th>Driver Name</th>
         <th>Rating</th>
@@ -25,10 +25,10 @@
         <td><%= link_to trip.passenger.name, passenger_path(trip.passenger.id) %></td> 
         <td><%= link_to trip.driver.name, driver_path(trip.driver.id)%></td> 
         <td><%= trip.rating %></td>
-        <td><%= trip.cost.to_f %></td>
+        <td><%= trip.cost %></td>
       </tr>
     <% end %>
   </table>
   <% else %>
-  <h2><%= "#{@driver.name} does not have any trips." %></h2>
+  <h2><%= "#{@driver.name} does not have any trips in the system." %></h2>
 <% end %>
