@@ -29,7 +29,7 @@ describe PassengersController do
     end
 
     it "responds with redirect with an invalid passenger id" do
-      get passenger_path("taco")
+      get passenger_path(-1)
       must_redirect_to passengers_path
     end
   end
@@ -90,7 +90,7 @@ describe PassengersController do
     end
 
     it "responds with redirect when getting the edit page for a non-existing passenger" do
-      get edit_passenger_path("taco")
+      get edit_passenger_path(-1)
       must_redirect_to passengers_path
     end
   end
@@ -120,7 +120,7 @@ describe PassengersController do
     end
 
     it "does not update any passenger if given an invalid id, and responds with a 404" do
-      id = "taco"
+      id = -1
 
       expect {
         patch passenger_path(id), params: edited_passenger_hash
@@ -159,7 +159,7 @@ describe PassengersController do
     end
 
     it "does not change the db when the passenger does not exist, then responds with a 404 error" do
-      id = "taco"
+      id = -1
 
       expect{
         delete passenger_path(id)
