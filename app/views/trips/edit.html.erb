@@ -1,2 +1,15 @@
-<h1>Trips#edit</h1>
-<p>Find me in app/views/trips/edit.html.erb</p>
+
+<%= form_with model: @trip, class: 'trip-form' do |f| %>
+
+  <%= f.label :date%>
+  <%= f.text_field :name %>
+
+  <%= f.label :cost %>
+  <%= f.text_field :cost %>
+
+  <%= f.label :rating %>
+  <%= f.label :rating %>
+    <%= f.select :rating, [1,2,3,4,5] %>
+
+  <%= f.submit "Edit Trip", class: "driver-form-button" %>
+<% end %>
