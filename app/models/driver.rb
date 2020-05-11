@@ -8,4 +8,8 @@ class Driver < ApplicationRecord
     return trips.empty? ? 0 : (trips.map { |trip| trip.cost }.sum)
   end
 
+  def average_rating
+    trips = Trip.where(driver_id: self.id)
+    return trips.empty? ? 0 : (trips.map { |trip| trip.rating.to_i }.sum)/trips.length
+  end
 end
