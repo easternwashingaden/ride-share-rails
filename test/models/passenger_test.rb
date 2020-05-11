@@ -81,6 +81,7 @@ describe Passenger do
       it "will return zero if the passenger has no trips" do
         new_passenger.save
 
+        expect(new_passenger.trips.count).must_equal 0
         expect(new_passenger.total_charges).must_equal 0
       end
     end
