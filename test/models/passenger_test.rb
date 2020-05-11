@@ -67,6 +67,22 @@ describe Passenger do
     describe "complete trip" do
       # Your code here
     end
-    # You may have additional methods to test here
+    
+    describe "total charges" do
+      it "will return the total cost of all trips taken by the passenger" do
+        new_passenger.save
+        new_driver = Driver.create(name: "Waldo", vin: "ALWSS52P9NEYLVDE9")
+        trip_1 = Trip.create(driver_id: new_driver.id, passenger_id: new_passenger.id, date: Date.today, rating: 5, cost: 337)
+        trip_2 = Trip.create(driver_id: new_driver.id, passenger_id: new_passenger.id, date: Date.today, rating: 3, cost: 1000)
+        
+        expect(new_passenger.total_charges).must_equal 1337
+      end
+
+      it "will return zero if the passenger has no trips" do
+        new_passenger.save
+
+        expect(new_passenger.total_charges).must_equal 0
+      end
+    end
   end
 end
