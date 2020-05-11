@@ -5,7 +5,7 @@ class Driver < ApplicationRecord
 
   def get_total_earnings
     trips = Trip.where(driver_id: self.id)
-    '%.2f' % 
+    #The driver gets 80% of the trip cost after a fee of $1.65 is subtracted
     return trips.empty? ? 0 : (trips.map { |trip| (trip.cost - 1.65)*0.8 }.sum)
   end
 
