@@ -5,7 +5,8 @@ class Driver < ApplicationRecord
 
   def get_total_earnings
     trips = Trip.where(driver_id: self.id)
-    return trips.empty? ? 0 : (trips.map { |trip| trip.cost }.sum)
+    '%.2f' % 
+    return trips.empty? ? 0 : (trips.map { |trip| (trip.cost - 1.65)*0.8 }.sum)
   end
 
   def average_rating
