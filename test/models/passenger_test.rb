@@ -69,4 +69,5 @@ describe Passenger do
     end
     # You may have additional methods to test here
   end
+
 end

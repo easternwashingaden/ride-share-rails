@@ -4,6 +4,9 @@ describe Driver do
   let (:new_driver) {
     Driver.new(name: "Kari", vin: "123", available: true)
   }
+  let (:new_passenger) {
+    Passenger.new(name: "Kari", phone_num: "111-111-1211")
+  }
   it "can be instantiated" do
     # Assert
     expect(new_driver.valid?).must_equal true
@@ -59,13 +62,53 @@ describe Driver do
   end
 
   # Tests for methods you create should go here
-  describe "custom methods" do
-    describe "average rating" do
-      # Your code here
+  describe "total_earnings" do
+    it " The total earnings should be 0 if the driver doesn't have any trip" do
+      # Arrange 
+      # No trip is created
+
+      # Assert 
+      expect(new_driver.get_total_earnings).must_equal 0
     end
 
-    describe "total earnings" do
-      # Your code here
+    it " The total earnings should be sum of all trips that the driver gets 80% of the trip cost after a fee of $1.65" do
+      # Arrange
+      new_driver.save
+      new_passenger.save
+      trip_1 = Trip.create(driver_id: new_driver.id, passenger_id: new_passenger.id, date: Date.today, rating: 5, cost: 250)
+      trip_2 = Trip.create(driver_id: new_driver.id, passenger_id: new_passenger.id, date: Date.today, rating: 3, cost: 100)
+      trip_3 = Trip.create(driver_id: new_driver.id, passenger_id: new_passenger.id, date: Date.today, rating: 1, cost: 168)
+      
+      trips = Trip.where(driver_id: new_driver.id)
+      
+      # Assert
+      expect(trips.count).must_equal 3
+      expect(new_driver.get_total_earnings).must_equal 410.44.to_s
+    end
+
+    describe "average_rating" do
+      it " The average rating should be 0 if the driver doesn't have any trip" do
+        # Arrange 
+        # No trip is created
+  
+        # Assert 
+        expect(new_driver.average_rating).must_equal 0
+      end
+  
+      it "The average rating should be sum of all ratings divided by the number of ratings" do
+        # Arrange
+        new_driver.save
+        new_passenger.save
+        trip_1 = Trip.create(driver_id: new_driver.id, passenger_id: new_passenger.id, date: Date.today, rating: 5, cost: 250)
+        trip_2 = Trip.create(driver_id: new_driver.id, passenger_id: new_passenger.id, date: Date.today, rating: 3, cost: 100)
+        trip_3 = Trip.create(driver_id: new_driver.id, passenger_id: new_passenger.id, date: Date.today, rating: 2, cost: 168)
+        
+        trips = Trip.where(driver_id: new_driver.id)
+        
+        # Assert
+        expect(trips.count).must_equal 3
+        expect(new_driver.average_rating).must_equal "3.00"
+      end
     end
 
     describe "can go online" do

@@ -46,8 +46,8 @@ end
       new_trip.save
       
       # Assert
-      expect(new_trip.driver.count).must_equal 1
-      expect(new_trip.passenger.count).must_equal 1
+      expect(new_trip.driver_id).must_equal driver.id
+      expect(new_trip.passenger_id).must_equal passenger.id
    
     end
   end
