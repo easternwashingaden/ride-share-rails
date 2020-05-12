@@ -1,24 +1,26 @@
-<h3>DRIVERS</h3>
+<section>
+  <h3>DRIVERS</h3>
 
-<% if @drivers.length > 0 %>
-  <table style="width:70%">
-  <tr>
-      <th>ID</th>
-      <th>Name</th>
-      <th>VIN</th>
-      <th>Status</th>
-    </tr>
-  <% @drivers.each do |driver| %>
-
+  <% if @drivers.length > 0 %>
+    <table style="width:70%">
     <tr>
-      <td><%= driver.id %></td>
-      <td><%= link_to driver.name, driver_path(driver.id)%></td>
-      <td><%= driver.vin.upcase %></td>
-      <td><%= driver.available ? "Available" : "Unavailable" %></td>
-    </tr>
-  
+        <th>ID</th>
+        <th>Name</th>
+        <th>VIN</th>
+        <th>Status</th>
+      </tr>
+    <% @drivers.each do |driver| %>
+
+      <tr>
+        <td><%= driver.id %></td>
+        <td><%= link_to driver.name, driver_path(driver.id)%></td>
+        <td><%= driver.vin.upcase %></td>
+        <td><%= driver.available ? "Available" : "Unavailable" %></td>
+      </tr>
+    
+    <% end %>
+    </table>
+  <% else %>
+      <p>No drivers in the system!</p>
   <% end %>
-  </table>
-<% else %>
-    <p>No drivers in the system!</p>
-<% end %>
+</section>
