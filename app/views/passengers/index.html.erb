@@ -1,20 +1,23 @@
-<h3>PASSENGERS</h3>
+<section>
 
-<% if @passengers.length > 0 %>
-  <table style="width:70%">    
-    <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Phone Number</th>
-    </tr>    
-    <% @passengers.each do |passenger| %>
+  <h3>PASSENGERS</h3>
+
+  <% if @passengers.length > 0 %>
+    <table style="width:70%">    
       <tr>
-        <td><%= passenger.id %></td>
-        <td><%= link_to passenger.name, passenger_path(passenger.id) %></td> 
-        <td><%= passenger.phone_num %></td>
-      </tr>
-    <% end %>
-  </table>
-<% else %>
-    <p>No passengers in the system!</p>
-<% end %>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Phone Number</th>
+      </tr>    
+      <% @passengers.each do |passenger| %>
+        <tr>
+          <td><%= passenger.id %></td>
+          <td><%= link_to passenger.name, passenger_path(passenger.id) %></td> 
+          <td><%= passenger.phone_num %></td>
+        </tr>
+      <% end %>
+    </table>
+  <% else %>
+      <p>No passengers in the system!</p>
+  <% end %>
+</section>
