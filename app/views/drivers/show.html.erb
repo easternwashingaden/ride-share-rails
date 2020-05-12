@@ -1,4 +1,4 @@
-<h3>Driver Name: <%= @driver.name %></h3>
+<h3><strong>Driver Name: <%= @driver.name %></strong></h3>
 <p><strong>Driver VIN:</strong> <%= @driver.vin.upcase %> </p>
 <p><strong>Driver Availability:</strong> <%= @driver.available ? "Available" : "Unavailable" %> </p>
 <p><strong>Total Earnings:</strong> <%= @driver.get_total_earnings %> </p>
@@ -10,7 +10,7 @@
 <% @trips = Trip.where(driver_id: @driver.id)%>
 <% if @trips.length > 0 %> 
   <table style="width:70%">  
-  <h2><%= "#{@driver.name}\'s Trips"%></h2> 
+  <h3><%= "#{@driver.name}\'s Trips"%></h3> 
     <tr>
         <th>ID</th>
         <th>Date</th>
