@@ -10,14 +10,22 @@
   </head>
   <body>
   <header>
-    <h1>Ride Share Rails</h1>
+    <%# <h1>Ride Share Rails</h1> %>
     <nav>
-    <ul>
+    <ul class = "nav">
       <li><%= link_to "Home", root_path %></li>
-      <li><%= link_to "All Drivers", drivers_path %></li>
-      <li><%= link_to "New Driver", new_driver_path %></li>
-      <li><%= link_to "All Passengers", passengers_path %></li>
-      <li><%= link_to "New Passenger", new_passenger_path %></li>
+      <li><a href="#">Drivers</a>
+        <ul>
+          <li><%= link_to "All Drivers", drivers_path %></li>
+          <li><%= link_to "New Driver", new_driver_path %></li>
+        </ul>
+      </li>
+      <li><a href="#">Passengers</a>
+        <ul>
+          <li><%= link_to "All Passengers", passengers_path %></li>
+          <li><%= link_to "New Passenger", new_passenger_path %></li>
+        </ul>
+      </li>
     </ul>
     </nav>
   </header>
