@@ -1,34 +1,36 @@
-<h3>Passenger Name: <%= @passenger.name %></h3>
-<p><strong>Phone Number:</strong> <%= @passenger.phone_num %> </p>
+<section>
+  <h3>Passenger Name: <%= @passenger.name %></h3>
+  <p><strong>Phone Number:</strong> <%= @passenger.phone_num %> </p>
 
-<%= button_to "Edit Passenger", edit_passenger_path(@passenger.id), method: :get %>
-<%= button_to "Delete Passenger", passenger_path(@passenger.id), method: :delete, data: {confirm: "Are you sure you want to delete this passenger: #{@passenger.name}?"} %>
-<%= button_to "Create a New Trip", passenger_trips_path(@passenger.id), method: :post %>
+  <%= button_to "Edit Passenger", edit_passenger_path(@passenger.id), method: :get %>
+  <%= button_to "Delete Passenger", passenger_path(@passenger.id), method: :delete, data: {confirm: "Are you sure you want to delete this passenger: #{@passenger.name}?"} %>
+  <%= button_to "Create a New Trip", passenger_trips_path(@passenger.id), method: :post %>
 
-  <% @trips = Trip.where(passenger_id: @passenger.id)%>
-  <% if @trips.length > 0 %>
-    <table style="width:70%">  
-      <h3><%= "#{@passenger.name}\'s Trips"%></h3> 
-      <tr>
-          <th>ID</th>
-          <th>Date</th>
-          <th>Passenger Name</th>
-          <th>Driver Name</th>
-          <th>Rating</th>
-          <th>Cost</th>
-      </tr>    
-      <% @trips.each do |trip| %>
+    <% @trips = Trip.where(passenger_id: @passenger.id)%>
+    <% if @trips.length > 0 %>
+      <table style="width:70%">  
+        <h3><%= "#{@passenger.name}\'s Trips"%></h3> 
         <tr>
-          <td><%= link_to trip.id, trip_path(trip.id) %></td>
-          <td><%= trip.date.to_date %></td>
-          <td><%= link_to trip.passenger.name, passenger_path(@passenger.id) %></td> 
-          <td><%= link_to trip.driver.name, driver_path(trip.driver.id)%></td> 
-          <td><%= trip.rating %></td>
-          <td><%= trip.cost %></td>
-          
-        </tr>
-      <% end %>
-    </table>
-<% else %>
-  <p><%= "#{@passenger.name} does not have any trips in the system." %></p>
-<% end %>
+            <th>ID</th>
+            <th>Date</th>
+            <th>Passenger Name</th>
+            <th>Driver Name</th>
+            <th>Rating</th>
+            <th>Cost</th>
+        </tr>    
+        <% @trips.each do |trip| %>
+          <tr>
+            <td><%= link_to trip.id, trip_path(trip.id) %></td>
+            <td><%= trip.date.to_date %></td>
+            <td><%= link_to trip.passenger.name, passenger_path(@passenger.id) %></td> 
+            <td><%= link_to trip.driver.name, driver_path(trip.driver.id)%></td> 
+            <td><%= trip.rating %></td>
+            <td><%= trip.cost %></td>
+            
+          </tr>
+        <% end %>
+      </table>
+  <% else %>
+    <p><%= "#{@passenger.name} does not have any trips in the system." %></p>
+  <% end %>
+</section>
