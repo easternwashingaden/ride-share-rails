@@ -12,6 +12,8 @@
  *
  */
 
+@import url('https://fonts.googleapis.com/css2?family=Balsamiq+Sans&display=swap');
+
 /* Custom bootstrap variables must be set or imported *before* bootstrap. */
 @import "bootstrap";
 
@@ -128,11 +130,53 @@ nav ul {
   border-right-color:purple;
   right: 10px; 
 }
+
+/* table styling */
+
+table {
+  margin-left: 3rem;
+  margin-top: 1rem;
+  border: solid 2px;
+}
+
+table th {
+  border: solid 2px;
+}
+
+table tr {
+  border: solid 2px;
+  text-align: center;
+}
+
+table td {
+  border: solid 2px;
+  padding: 1px;
+  text-align: center;
+}
+
+p {
+  margin: 1rem;
+}
+
+h3 {
+  margin-top: 1rem;
+  margin-left: 1rem;
+  font-family: 'Balsamiq Sans', cursive;
+  color: purple;
+}
+
+label {
+  margin-left: 1rem;
+}
+
+section {
+  margin-top: 5rem;
+}
+
 footer{
   background-color: lightgray;
   padding: 1rem;
   text-align: center;
   margin-top: 15rem;
 }
-
 
