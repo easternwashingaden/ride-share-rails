@@ -11,4 +11,5 @@ Rails.application.routes.draw do
   end
   
   resources :trips, except: [:index, :new, :create]
+  patch '/trips/:id/complete_trip', to: 'trips#complete_trip', as: 'complete_trip'
 end
