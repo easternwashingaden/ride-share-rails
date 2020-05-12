@@ -172,7 +172,7 @@ h3 {
 
 label {
   margin-left: 1rem;
-  font-family: 'Times New Roman', Times, serif;;
+  font-family: 'Times New Roman', Times, serif;
 }
 
 section {
@@ -188,7 +188,20 @@ footer{
 }
 
 // styple the button
-button {
-  border: purple 1px;
+.form-button {
+  border: solid purple 1px;
+  font-family: 'Times New Roman', Times, serif;
+  border-radius: 5px;
+  background-color: purple;
+  color: white;
+}
+.errors {
+  color: red;
+  font-family: 'Times New Roman', Times, serif;
+}
+
+// styling for edit, mark avaiable/unavailable 
+.crud-button {
+
 }
 
