@@ -1,5 +1,11 @@
 <h3>PASSENGERS</h3>
 
+<p><%= page_entries_info @passengers %></p>
+
+<div class="pagination">
+  <%= will_paginate @passengers %>
+</div>
+
 <% if @passengers.length > 0 %>
   <table style="width:70%">    
     <tr>

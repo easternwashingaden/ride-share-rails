@@ -1,5 +1,10 @@
-
 <h3>DRIVERS</h3>
+
+<p><%= page_entries_info @passengers %></p>
+
+<div class="pagination">
+  <%= will_paginate @passengers %>
+</div>
 
 <% if @drivers.length > 0 %>
   <table style="width:70%">

@@ -133,11 +133,50 @@ nav ul {
   right: 10px; 
 }
 
+/* pagination */
+
+// Modified from: https://mislav.github.io/will_paginate/
+.pagination {
+  background: white;
+  margin: auto;
+  font-family: 'Times New Roman', Times, serif;
+  /* self-clearing method: */ }
+  .pagination a, .pagination span, .pagination em {
+    padding: 0.2em 0.5em;
+    display: block;
+    margin-right: 1px; }
+  .pagination .disabled {
+    color: #999999;
+    border: 1px solid #dddddd; }
+  .pagination .current {
+    font-style: normal;
+    font-weight: bold;
+    background: purple;
+    color: white;
+    border: 1px solid purple; }
+  .pagination a {
+    text-decoration: none;
+    color: purple;
+    border: 1px solid #9aafe5; }
+    .pagination a:hover, .pagination a:focus {
+      color: #000033;
+      border-color: #000033; }
+  .pagination:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden; }
+  * html .pagination {
+    height: 1%; }
+  *:first-child + html .pagination {
+    overflow: hidden; }
+
 /* table styling */
 
 table {
-  margin-left: 3rem;
-  margin-top: 1rem;
+  margin: auto;
+  margin-top: 1em;
   border: solid 1px;
 }
 
@@ -166,7 +205,7 @@ p {
 h1 {
   text-align: center;
   color: purple;
-  font-family: 'Balsamiq Sans', cursive;
+  font-family: 'Pattaya', cursive;
   font-style: italic; 
   font-weight: bold;
   font-size: 35px;
@@ -175,7 +214,7 @@ h1 {
 h3 {
   margin-top: 1rem;
   margin-left: 1rem;
-  font-family: 'Balsamiq Sans', cursive;
+  font-family: 'Pattaya', cursive;
   color: purple;
   font-style: initial;
   font-weight: bold;
@@ -248,4 +287,3 @@ footer{
 .images {
   max-width: 50%;
 }
-
