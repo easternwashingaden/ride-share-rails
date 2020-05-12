@@ -4,6 +4,7 @@ describe Passenger do
   let (:new_passenger) {
     Passenger.new(name: "Kari", phone_num: "111-111-1211")
   }
+
   it "can be instantiated" do
     # Assert
     expect(new_passenger.valid?).must_equal true
@@ -61,11 +62,36 @@ describe Passenger do
   # Tests for methods you create should go here
   describe "custom methods" do
     describe "request a ride" do
-      # Your code here
+      it "can set the passenger for a new trip through passenger_id" do 
+        new_passenger.save
+        new_driver = Driver.create!(name: "Waldo", vin: "ALWSS52P9NEYLVDE9")
+        new_trip = Trip.new(driver_id: new_driver.id, passenger_id: nil, date: Date.today, rating: nil, cost: 1337)
+
+        new_trip.passenger_id = new_passenger.id
+
+        expect { new_trip.save }.must_differ "Trip.count", 1
+        expect(new_trip.passenger_id).must_equal new_passenger.id
+      end
     end
 
     describe "complete trip" do
-      # Your code here
+      it "can successfully assign a rating to a trip in progress" do
+        new_passenger.save
+        new_driver = Driver.create!(name: "Waldo", vin: "ALWSS52P9NEYLVDE9")
+        Trip.create!(driver_id: new_driver.id, passenger_id: new_passenger.id, date: Date.today, rating: nil, cost: 1337)
+        
+        rate_trip_hash = {
+          trip: {
+            rating: 5
+          },
+        }
+
+        new_trip = Trip.find_by(passenger_id: new_passenger.id)
+        patch trip_path(new_trip.id), params: rate_trip_hash
+
+        new_trip.reload
+        expect(new_trip.rating).must_equal rate_trip_hash[:trip][:rating]
+      end
     end
     
     describe "total charges" do
