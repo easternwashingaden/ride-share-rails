@@ -7,7 +7,7 @@
   </li>
   <li>
     <strong>Cost:</strong> 
-    $<%= @trip.cost %>
+    <%= @trip.cost_to_currency %>
   </li>
   <li>
     <% if @trip.rating.nil? %>

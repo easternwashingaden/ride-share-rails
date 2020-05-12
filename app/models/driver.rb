@@ -1,7 +1,9 @@
 class Driver < ApplicationRecord
   has_many :trips
+  
   validates :name, presence: true
   validates :vin, presence: true
+  validates :available, inclusion: { in: [true, false] }
 
   def get_total_earnings
     trips = Trip.where(driver_id: self.id)
