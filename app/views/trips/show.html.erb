@@ -12,7 +12,7 @@
   <li>
     <% if @trip.rating.nil? %>
     
-      <%= form_with model: @trip, class: "rate-trip-form" do |f| %>
+      <%= form_with model: @trip, url: {:action => "complete_trip"},class: "rate-trip-form" do |f| %>
 
         <%= f.label "Rating:" %>
         <%= f.select(:rating, [1, 2, 3, 4, 5]) %>
