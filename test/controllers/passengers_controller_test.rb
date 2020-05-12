@@ -2,7 +2,7 @@ require "test_helper"
 
 describe PassengersController do
   let (:passenger) {
-    Passenger.create(
+    Passenger.create!(
       name: "Lak Mok",
       phone_num: "(555) 555-5555"
     )
