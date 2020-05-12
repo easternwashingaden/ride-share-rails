@@ -136,26 +136,29 @@ nav ul {
 table {
   margin-left: 3rem;
   margin-top: 1rem;
-  border: solid 2px;
+  border: solid 1px;
 }
 
 table th {
-  border: solid 2px;
+  border: solid 1px;
+  font-family: 'Times New Roman', Times, serif;;
 }
 
 table tr {
-  border: solid 2px;
+  border: solid 1px;
   text-align: center;
 }
 
 table td {
-  border: solid 2px;
+  border: solid 1px;
   padding: 1px;
   text-align: center;
+  font-family: 'Times New Roman', Times, serif;;
 }
 
 p {
   margin: 1rem;
+  font-family: 'Times New Roman', Times, serif;;
 }
 
 h3 {
@@ -163,10 +166,13 @@ h3 {
   margin-left: 1rem;
   font-family: 'Balsamiq Sans', cursive;
   color: purple;
+  font-style: initial;
+  font-weight: bold;
 }
 
 label {
   margin-left: 1rem;
+  font-family: 'Times New Roman', Times, serif;;
 }
 
 section {
