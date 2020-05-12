@@ -53,7 +53,66 @@ end
   end
 
   describe "validations" do
-    # Your tests go here
+    it "must have a driver" do
+      # Arrange
+      new_trip.driver_id = nil
+
+      # Assert
+      expect(new_trip.valid?).must_equal false
+      expect(new_trip.errors.messages).must_include :driver_id
+      expect(new_trip.errors.messages[:driver_id]).must_equal ["can't be blank"]
+    end
+
+    it "must have a passenger" do
+      # Arrange
+      new_trip.passenger_id = nil
+
+      # Assert
+      expect(new_trip.valid?).must_equal false
+      expect(new_trip.errors.messages).must_include :passenger_id
+      expect(new_trip.errors.messages[:passenger_id]).must_equal ["can't be blank"]
+    end
+
+    it "must have a date" do
+      # Arrange
+      new_trip.date = nil
+
+      # Assert
+      expect(new_trip.valid?).must_equal false
+      expect(new_trip.errors.messages).must_include :date
+      expect(new_trip.errors.messages[:date]).must_equal ["can't be blank"]
+    end
+
+    it "must have a cost " do
+      # Arrange
+      new_trip.cost = nil
+
+      # Assert
+      expect(new_trip.valid?).must_equal false
+      expect(new_trip.errors.messages).must_include :cost
+      expect(new_trip.errors.messages[:cost]).must_equal ["can't be blank", "is not a number"]
+    end
+
+    it "The cost must be an integer " do
+      # Arrange
+      new_trip.cost = "ldaksfdlaksf1233"
+
+      # Assert
+      expect(new_trip.valid?).must_equal false
+      expect(new_trip.errors.messages).must_include :cost
+      expect(new_trip.errors.messages[:cost]).must_equal ["is not a number"]
+
+    end
+
+    it "rating is an optional field " do
+      # Arrange
+      new_trip.rating = nil
+
+      # Assert
+      expect(new_trip.valid?).must_equal true
+      expect(new_trip.errors.messages).wont_include :rating
+      expect(new_trip.errors.messages[:rating]).must_equal []
+    end
   end
 
   # Tests for methods you create should go here
