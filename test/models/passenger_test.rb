@@ -74,7 +74,7 @@ describe Passenger do
   end
 
   describe "complete trip" do
-    # We could not find a way to patch an existing trip from the model test (the terminal kept showing a NoMethodError for patch trip_path(new_trip.id)). Instead, the following test checks whether rating can be assigned to a new trip that has not been saved.
+    # We could not find a way to patch an existing trip from the model test (the terminal kept showing a NameError for patch trip_path(new_trip.id)). Instead, the following test checks whether rating can be assigned to a new trip that has not been saved.
     it "can successfully assign a rating to a trip" do
       new_passenger.save
       new_driver = Driver.create!(name: "Waldo", vin: "ALWSS52P9NEYLVDE9", available: true)
