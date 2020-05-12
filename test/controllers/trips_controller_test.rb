@@ -2,21 +2,22 @@ require "test_helper"
 
 describe TripsController do
   let (:driver) {
-    Driver.create(
+    Driver.create!(
       name: "Lee H", 
-      vin: "FJSKDJ12"
+      vin: "FJSKDJ12",
+      available: true
     )
   }
   
   let (:passenger) {
-    Passenger.create(
+    Passenger.create!(
       name: "Lak Mok",
       phone_num: "(555) 555-5555"
     )
   }
 
   let (:trip) {
-    Trip.create(
+    Trip.create!(
       driver_id: driver.id,
       passenger_id: passenger.id, 
       date: Date.today + 1, 
@@ -52,7 +53,7 @@ describe TripsController do
       expect(new_trip.passenger_id).must_equal passenger.id
       expect(new_trip.driver_id).must_equal driver.id
       expect(new_trip.date).must_equal Date.today
-      expect(new_trip.cost).must_be_kind_of Integer
+      expect(new_trip.cost).must_be_kind_of Float
       expect(new_trip.rating).must_be_nil
       
       must_redirect_to passenger_path(passenger.id)

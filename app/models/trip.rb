@@ -5,7 +5,7 @@ class Trip < ApplicationRecord
   belongs_to :passenger
 
   validates :driver_id, :passenger_id, :date, :cost, presence: true
-  validates :rating, inclusion: { in: [1, 2, 3, 4, 5] }
+  validates :rating, inclusion: { in: [nil, 1, 2, 3, 4, 5] }
   validates :cost, numericality: true
 
   def driver

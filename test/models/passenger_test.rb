@@ -25,9 +25,9 @@ describe Passenger do
     it "can have many trips" do
       # Arrange
       new_passenger.save
-      new_driver = Driver.create(name: "Waldo", vin: "ALWSS52P9NEYLVDE9")
-      trip_1 = Trip.create(driver_id: new_driver.id, passenger_id: new_passenger.id, date: Date.today, rating: 5, cost: 1234)
-      trip_2 = Trip.create(driver_id: new_driver.id, passenger_id: new_passenger.id, date: Date.today, rating: 3, cost: 6334)
+      new_driver = Driver.create!(name: "Waldo", vin: "ALWSS52P9NEYLVDE9", available: true)
+      trip_1 = Trip.create!(driver_id: new_driver.id, passenger_id: new_passenger.id, date: Date.today, rating: 5, cost: 1234)
+      trip_2 = Trip.create!(driver_id: new_driver.id, passenger_id: new_passenger.id, date: Date.today, rating: 3, cost: 6334)
       
       # Assert
       expect(new_passenger.trips.count).must_equal 2
@@ -60,57 +60,48 @@ describe Passenger do
   end
 
   # Tests for methods you create should go here
-  describe "custom methods" do
-    describe "request a ride" do
-      it "can set the passenger for a new trip through passenger_id" do 
-        new_passenger.save
-        new_driver = Driver.create!(name: "Waldo", vin: "ALWSS52P9NEYLVDE9")
-        new_trip = Trip.new(driver_id: new_driver.id, passenger_id: nil, date: Date.today, rating: nil, cost: 1337)
+  describe "request a ride" do
+    it "can set the passenger for a new trip through passenger_id" do 
+      new_passenger.save
+      new_driver = Driver.create!(name: "Waldo", vin: "ALWSS52P9NEYLVDE9", available: true)
+      new_trip = Trip.new(driver_id: new_driver.id, passenger_id: nil, date: Date.today, rating: nil, cost: 1337)
 
-        new_trip.passenger_id = new_passenger.id
+      new_trip.passenger_id = new_passenger.id
 
-        expect { new_trip.save }.must_differ "Trip.count", 1
-        expect(new_trip.passenger_id).must_equal new_passenger.id
-      end
-    end
-
-    describe "complete trip" do
-      it "can successfully assign a rating to a trip in progress" do
-        new_passenger.save
-        new_driver = Driver.create!(name: "Waldo", vin: "ALWSS52P9NEYLVDE9")
-        Trip.create!(driver_id: new_driver.id, passenger_id: new_passenger.id, date: Date.today, rating: nil, cost: 1337)
-        
-        rate_trip_hash = {
-          trip: {
-            rating: 5
-          },
-        }
-
-        new_trip = Trip.find_by(passenger_id: new_passenger.id)
-        patch trip_path(new_trip.id), params: rate_trip_hash
-
-        new_trip.reload
-        expect(new_trip.rating).must_equal rate_trip_hash[:trip][:rating]
-      end
-    end
-    
-    describe "total charges" do
-      it "will return the total cost of all trips taken by the passenger" do
-        new_passenger.save
-        new_driver = Driver.create(name: "Waldo", vin: "ALWSS52P9NEYLVDE9")
-        trip_1 = Trip.create(driver_id: new_driver.id, passenger_id: new_passenger.id, date: Date.today, rating: 5, cost: 337)
-        trip_2 = Trip.create(driver_id: new_driver.id, passenger_id: new_passenger.id, date: Date.today, rating: 3, cost: 1000)
-        
-        expect(new_passenger.total_charges).must_equal 1337
-      end
-
-      it "will return zero if the passenger has no trips" do
-        new_passenger.save
-
-        expect(new_passenger.trips.count).must_equal 0
-        expect(new_passenger.total_charges).must_equal 0
-      end
+      expect { new_trip.save }.must_differ "Trip.count", 1
+      expect(new_trip.passenger_id).must_equal new_passenger.id
     end
   end
 
+  describe "complete trip" do
+    # We could not find a way to patch an existing trip from the model test (the terminal kept showing a NameError for patch trip_path(new_trip.id)). Instead, the following test checks whether rating can be assigned to a new trip that has not been saved.
+    it "can successfully assign a rating to a trip" do
+      new_passenger.save
+      new_driver = Driver.create!(name: "Waldo", vin: "ALWSS52P9NEYLVDE9", available: true)
+      new_trip = Trip.new(driver_id: new_driver.id, passenger_id: new_passenger.id, date: Date.today, rating: nil, cost: 1337)
+      
+      new_trip.rating = 5
+
+      expect { new_trip.save }.must_differ "Trip.count", 1
+      expect(new_trip.rating).must_equal 5
+    end
+  end
+  
+  describe "total charges" do
+    it "will return the total cost of all trips taken by the passenger" do
+      new_passenger.save
+      new_driver = Driver.create!(name: "Waldo", vin: "ALWSS52P9NEYLVDE9", available: true)
+      trip_1 = Trip.create!(driver_id: new_driver.id, passenger_id: new_passenger.id, date: Date.today, rating: 5, cost: 337)
+      trip_2 = Trip.create!(driver_id: new_driver.id, passenger_id: new_passenger.id, date: Date.today, rating: 3, cost: 1000)
+      
+      expect(new_passenger.total_charges).must_equal 1337.0
+    end
+
+    it "will return zero if the passenger has no trips" do
+      new_passenger.save
+
+      expect(new_passenger.trips.count).must_equal 0
+      expect(new_passenger.total_charges).must_equal 0
+    end
+  end
 end

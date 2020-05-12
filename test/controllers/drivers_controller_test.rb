@@ -2,7 +2,7 @@ require "test_helper"
 
 describe DriversController do
   let (:driver) {
-    Driver.create(
+    Driver.create!(
       name: "new driver", 
       vin: "FJSKDJ12",
       available: true

@@ -59,7 +59,15 @@ describe Driver do
       expect(new_driver.errors.messages).must_include :vin
       expect(new_driver.errors.messages[:vin]).must_equal ["can't be blank"]
     end
-  end
+
+    it "will only allow true or false for available" do
+      new_driver.available = nil
+
+      expect(new_driver.valid?).must_equal false
+      expect(new_driver.errors.messages).must_include :available
+      expect(new_driver.errors.messages[:available]).must_equal ["is not included in the list"]
+    end
+   end
 
   # Tests for methods you create should go here
   describe "total_earnings" do
@@ -111,14 +119,18 @@ describe Driver do
       end
     end
 
-    describe "can go online" do
-      # Your code here
-    end
+    describe "available" do
+      it "can go online" do
+        new_driver.available = true
+        expect { new_driver.save }.must_differ "Driver.count", 1
+        expect(new_driver.available).must_equal true
+      end
 
-    describe "can go offline" do
-      # Your code here
+      it "can go offline" do
+        new_driver.available = false
+        expect { new_driver.save }.must_differ "Driver.count", 1
+        expect(new_driver.available).must_equal false
+      end
     end
-
-    # You may have additional methods to test
   end
 end
