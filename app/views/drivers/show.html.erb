@@ -3,9 +3,9 @@
 <p><strong>Driver Availability:</strong> <%= @driver.available ? "Available" : "Unavailable" %> </p>
 <p><strong>Total Earnings:</strong> <%= @driver.get_total_earnings %> </p>
 <p><strong>Average Rating:</strong> <%= @driver.average_rating %> </p>
-<%= @driver.available ? button_to("Make Unavailable", driver_available_path(@driver), method: :patch) : button_to("Make Available", driver_available_path(@driver), method: :patch)%> 
-<%= button_to "Edit Driver", edit_driver_path(@driver.id), method: :get%>
-<%= button_to "Delete Driver", driver_path(@driver.id), method: :delete, data: {confirm: "Are you sure you want to delete this driver: #{@driver.name}?"} %>
+<%= @driver.available ? button_to("Make Unavailable", driver_available_path(@driver), method: :patch, :class => "button") : button_to("Make Available", driver_available_path(@driver), method: :patch, :class => "button")%> 
+<%= button_to "Edit Driver", edit_driver_path(@driver.id), method: :get, :class => "button" %>
+<%= button_to "Delete Driver", driver_path(@driver.id), method: :delete, :class => "button", data: {confirm: "Are you sure you want to delete this driver: #{@driver.name}?"} %>
 
 <% @trips = Trip.where(driver_id: @driver.id)%>
 <% if @trips.length > 0 %> 

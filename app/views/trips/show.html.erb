@@ -1,6 +1,6 @@
 <h3>Trip #<%= @trip.id %></h3>
 
-<ul>
+<ul class = "trip">
   <li>
     <strong>Date:</strong> 
     <%= @trip.date.strftime("%m/%d/%Y") %>
@@ -35,6 +35,5 @@
   </li>
 </ul>
 
-<%= button_to "Edit Trip", edit_trip_path(@trip.id), method: :get %>
-
-<%= button_to "Delete Trip", trip_path(@trip.id), method: :delete, data: {confirm: "Are you sure you want to delete Trip ##{@trip.id}?"} %>
+<%= button_to "Edit Trip", edit_trip_path(@trip.id), method: :get, :class => "button" %>
+<%= button_to "Delete Trip", trip_path(@trip.id), method: :delete, :class => "button", data: {confirm: "Are you sure you want to delete Trip ##{@trip.id}?"} %>
