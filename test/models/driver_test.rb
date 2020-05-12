@@ -119,14 +119,18 @@ describe Driver do
       end
     end
 
-    describe "can go online" do
-      # Your code here
-    end
+    describe "available" do
+      it "can go online" do
+        new_driver.available = true
+        expect { new_driver.save }.must_differ "Driver.count", 1
+        expect(new_driver.available).must_equal true
+      end
 
-    describe "can go offline" do
-      # Your code here
+      it "can go offline" do
+        new_driver.available = false
+        expect { new_driver.save }.must_differ "Driver.count", 1
+        expect(new_driver.available).must_equal false
+      end
     end
-
-    # You may have additional methods to test
   end
 end
