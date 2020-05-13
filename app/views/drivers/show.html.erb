@@ -1,4 +1,8 @@
 <h3><strong>Driver Name: <%= @driver.name %></strong></h3>
+<%= image_tag 'https://source.unsplash.com/collection/4683414/200x200', 
+      alt: "Profile pic for #{@driver.name}", 
+      class: "profile-img" 
+%>
 <p><strong>Driver VIN:</strong> <%= @driver.vin.upcase %> </p>
 <p><strong>Driver Availability:</strong> <%= @driver.available ? "Available" : "Unavailable" %> </p>
 <p><strong>Total Earnings:</strong> <%= number_to_currency(@driver.get_total_earnings) %> </p>

@@ -1,5 +1,8 @@
-
 <h3>Passenger Name: <%= @passenger.name %></h3>
+<%= image_tag 'https://source.unsplash.com/collection/4683414/200x200', 
+      alt: "Profile pic for #{@passenger.name}", 
+      class: "profile-img" 
+%>
 <p><strong>Phone Number:</strong> <%= @passenger.phone_num %></p>
 <p><strong>Total Charges:</strong> <%= number_to_currency(@passenger.total_charges) %></p>
 
