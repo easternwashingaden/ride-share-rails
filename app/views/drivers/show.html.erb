@@ -1,7 +1,7 @@
 <h3><strong>Driver Name: <%= @driver.name %></strong></h3>
 <p><strong>Driver VIN:</strong> <%= @driver.vin.upcase %> </p>
 <p><strong>Driver Availability:</strong> <%= @driver.available ? "Available" : "Unavailable" %> </p>
-<p><strong>Total Earnings:</strong> <%= @driver.get_total_earnings %> </p>
+<p><strong>Total Earnings:</strong> <%= number_to_currency(@driver.get_total_earnings) %> </p>
 <p><strong>Average Rating:</strong> <%= @driver.average_rating %> </p>
 <%= @driver.available ? button_to("Make Unavailable", driver_available_path(@driver), method: :patch, :class => "button") : button_to("Make Available", driver_available_path(@driver), method: :patch, :class => "button")%> 
 <%= button_to "Edit Driver", edit_driver_path(@driver.id), method: :get, :class => "button" %>
