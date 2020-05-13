@@ -2,21 +2,22 @@ require "test_helper"
 
 describe TripsController do
   let (:driver) {
-    Driver.create(
+    Driver.create!(
       name: "Lee H", 
-      vin: "FJSKDJ12"
+      vin: "FJSKDJ12",
+      available: true
     )
   }
   
   let (:passenger) {
-    Passenger.create(
+    Passenger.create!(
       name: "Lak Mok",
       phone_num: "(555) 555-5555"
     )
   }
 
   let (:trip) {
-    Trip.create(
+    Trip.create!(
       driver_id: driver.id,
       passenger_id: passenger.id, 
       date: Date.today + 1, 
@@ -52,7 +53,7 @@ describe TripsController do
       expect(new_trip.passenger_id).must_equal passenger.id
       expect(new_trip.driver_id).must_equal driver.id
       expect(new_trip.date).must_equal Date.today
-      expect(new_trip.cost).must_be_kind_of Integer
+      expect(new_trip.cost).must_be_kind_of Float
       expect(new_trip.rating).must_be_nil
       
       must_redirect_to passenger_path(passenger.id)
@@ -145,6 +146,48 @@ describe TripsController do
 
       expect{
         delete trip_path(id)
+      }.wont_differ "Trip.count"
+
+      must_respond_with :not_found
+    end
+  end
+
+  describe "complete_trip" do
+    let (:rate_trip_hash) {
+      {
+        trip: {
+          rating: 5, 
+        },
+      }
+    }
+
+    it "assigns a rating to a trip in progress" do
+      trip.update(rating: nil)
+
+      expect {
+        patch complete_trip_path(trip.id), params: rate_trip_hash
+      }.wont_differ "Trip.count"
+
+      trip.reload
+      expect(trip.rating).must_equal rate_trip_hash[:trip][:rating]
+    end
+
+    it "changes the driver status to available" do
+      trip.driver.update(available: false)
+
+      expect {
+        patch complete_trip_path(trip.id), params: rate_trip_hash
+      }.wont_differ "Trip.count"
+
+      driver.reload
+      expect(trip.driver.available).must_equal true
+    end
+
+    it "does not update a trip if an invalid passenger id is given, and responds with a 404 error" do
+      id = -1
+
+      expect {
+        patch trip_path(id), params: rate_trip_hash
       }.wont_differ "Trip.count"
 
       must_respond_with :not_found
