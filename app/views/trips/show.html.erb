@@ -12,12 +12,12 @@
   <li>
     <% if @trip.rating.nil? %>
     
-      <%= form_with model: @trip, class: "rate-trip-form" do |f| %>
+      <%= form_with model: @trip, url: {:action => "complete_trip"},class: "rate-trip-form" do |f| %>
 
         <%= f.label "Rating:" %>
         <%= f.select(:rating, [1, 2, 3, 4, 5]) %>
 
-        <%= f.submit "Rate Trip", class: "rate-trip-form-button" %>
+        <%= f.submit "Rate Trip", class: "rate-trip-form-button", data: {confirm: "Are you sure you want to rate Trip ##{@trip.id}? This will complete the trip and set #{@trip.driver.name}'s status to available."} %>
       <% end %>
       
     <% else %>

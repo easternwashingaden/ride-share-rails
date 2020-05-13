@@ -61,6 +61,19 @@ class TripsController < ApplicationController
     end
   end 
 
+  def complete_trip
+    @trip = Trip.find_by(id: params[:id])
+    if @trip.nil?
+      head :not_found
+      return
+    else
+      @trip.update(rating: params[:trip][:rating])
+      @trip.driver.update(available: true)
+      redirect_to trip_path(@trip)
+      return
+    end
+  end
+
   private 
 
   def trip_params
