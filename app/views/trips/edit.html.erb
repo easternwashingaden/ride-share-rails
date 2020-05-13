@@ -33,8 +33,10 @@
 
   <div class="line-break"></div>
 
-  <%= f.label :rating %>
-  <%= f.select(:rating, [1, 2, 3, 4, 5]) %>
+  <% if @trip.rating %> <%#  This conditional will prevent users from rating an in-progress trip without setting the driver to available %>
+    <%= f.label :rating %>
+    <%= f.select(:rating, [1, 2, 3, 4, 5]) %>
+  <% end %>
 
   <div class="line-break"></div>
 
