@@ -149,9 +149,23 @@ describe DriversController do
   end
 
   describe "destroy" do
-    it "destroys the driver instance in db when driver exists, then redirects" do
+    it "destroys the driver instance in db when driver exists and has no trips, then redirects" do
       id = driver.id
 
+      expect {
+        delete driver_path(id)
+      }.must_differ "Driver.count", -1
+
+      must_redirect_to drivers_path
+    end
+
+    it "destroys the driver instance in db when driver exists and has at least one trip, then redirects" do
+      id = driver.id
+
+      new_passenger = Passenger.create!(name: "Lee", phone_num: "(555) 555-5555")
+      trip_1 = Trip.create!(driver_id: id, passenger_id: new_passenger.id, date: Date.today, rating: 5, cost: 1234)
+      trip_2 = Trip.create!(driver_id: id, passenger_id: new_passenger.id, date: Date.today, rating: 3, cost: 6334)
+  
       expect {
         delete driver_path(id)
       }.must_differ "Driver.count", -1
