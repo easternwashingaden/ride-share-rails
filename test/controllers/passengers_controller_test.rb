@@ -148,10 +148,24 @@ describe PassengersController do
   end
 
   describe "destroy" do
-    it "destroys the passenger instance in db when passenger exists, then redirects" do
+    it "destroys the passenger instance in db when passenger exists and has no trips, then redirects" do
       id = passenger.id
       
       expect{
+        delete passenger_path(id)
+      }.must_differ "Passenger.count", -1
+
+      must_redirect_to passengers_path
+    end
+
+    it "destroys the driver instance in db when driver exists and has at least one trip, then redirects" do
+      id = passenger.id
+
+      new_driver = Driver.create!(name: "Lee", vin: "TESTVIN", available: true)
+      trip_1 = Trip.create!(driver_id: new_driver.id, passenger_id: id, date: Date.today, rating: 5, cost: 1234)
+      trip_2 = Trip.create!(driver_id: new_driver.id, passenger_id: id, date: Date.today, rating: 3, cost: 6334)
+  
+      expect {
         delete passenger_path(id)
       }.must_differ "Passenger.count", -1
 
